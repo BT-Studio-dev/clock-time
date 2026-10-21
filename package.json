@@ -1,6 +1,6 @@
 {
   "name": "clock-time",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "BT Clock (Clock Time) — Cinematic Countdown, World Clocks, and Desktop/Mobile Downloads for Windows 7, Windows 10/11, and Android 8+",
   "private": true,
   "type": "module",
@@ -16,10 +16,12 @@
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "@breezystack/lamejs": "^1.2.7",
     "@tailwindcss/vite": "^4.1.17",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^4.3.4",
+    "sharp": "^0.33.5",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3",
     "vite": "^6.2.0"

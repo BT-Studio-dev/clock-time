@@ -1,7 +1,7 @@
 import React from "react";
-import { Download, Globe, Moon, Sun, Volume2, VolumeX, Radio, Clock, Grid } from "lucide-react";
+import { Download, Globe, Moon, Sun, Volume2, VolumeX, Clock, Grid } from "lucide-react";
 import { playSfx, toggleSfx } from "../lib/sfx";
-import { toggleAmbient } from "../lib/ambient";
+import { MusicPicker } from "./MusicPicker";
 
 type HeaderProps = {
   activeTab: "countdown" | "downloads" | "world-clock";
@@ -51,12 +51,6 @@ export const Header: React.FC<HeaderProps> = ({
     setSfxOn(next);
   };
 
-  const handleAmbientToggle = () => {
-    playSfx("click");
-    const next = toggleAmbient();
-    setAmbientOn(next);
-  };
-
   const handlePixelToggle = () => {
     playSfx("pop");
     setPixelOn(!pixelOn);
@@ -96,8 +90,8 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="font-bold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-[#ffd166] bg-clip-text text-transparent">
                 BT Clock
               </span>
-              <span className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-[#7eb8e8]/20 text-[#7eb8e8] border border-[#7eb8e8]/30">
-                v2.4
+              <span className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-[#ffd166]/20 text-[#ffd166] border border-[#ffd166]/30">
+                v2.5.0
               </span>
             </div>
             <p className="text-xs text-slate-400 hidden sm:block">
@@ -178,27 +172,12 @@ export const Header: React.FC<HeaderProps> = ({
             />
           </button>
 
-          {/* Ambient Music */}
-          <button
-            onClick={handleAmbientToggle}
-            title={ambientOn ? (isAr ? "إيقاف الموسيقى" : "Pause Ambient") : isAr ? "تشغيل الموسيقى" : "Play Ambient"}
-            className={`p-2 rounded-xl border transition-all cursor-pointer ${
-              ambientOn
-                ? "bg-[#7eb8e8]/20 border-[#7eb8e8]/50 text-[#7eb8e8]"
-                : "bg-white/5 border-white/10 text-slate-400 hover:text-white hover:bg-white/10"
-            }`}
-          >
-            <div className="flex items-center gap-1">
-              <Radio className="size-4" />
-              {ambientOn && (
-                <div className="flex items-end gap-0.5 h-3 w-3">
-                  <span className="w-0.5 bg-[#7eb8e8] eq-bar-1" />
-                  <span className="w-0.5 bg-[#7eb8e8] eq-bar-2" />
-                  <span className="w-0.5 bg-[#7eb8e8] eq-bar-3" />
-                </div>
-              )}
-            </div>
-          </button>
+          {/* Music Picker (Tracks & Ambient) */}
+          <MusicPicker
+            ambientOn={ambientOn}
+            setAmbientOn={setAmbientOn}
+            lang={lang}
+          />
 
           {/* SFX Toggle */}
           <button
