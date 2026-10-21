@@ -1,0 +1,18 @@
+{
+  "name": "BT Clock",
+  "short_name": "BT Clock",
+  "description": "Cinematic countdown clock, world time, and desktop editions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0716",
+  "theme_color": "#0b0716",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64 128x128 256x256",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
