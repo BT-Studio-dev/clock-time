@@ -1,0 +1,5 @@
+4bb219045651e9ca86537f2ea323ef5884dd0f9bf0b561c02dbb93db3091e296  BT-Clock-Setup-v2.4.0-Win10-11.exe
+16db80f717a76c0b2fe593abff75912baa8a6f76f85d4acaa4ebc66c258c1c7f  BT-Clock-Portable-v2.4.0-Win10-11.zip
+5ada334b4534264048dc58d637b1856c5a1f1486a4fc74901f23fb0861af7384  BT-Clock-Legacy-Setup-v1.8.6-Win7.exe
+9da160dac66a088384be54d77843795f88c10c81573b210abcad590f0d06ed22  BT-Clock-Legacy-Portable-v1.8.6-Win7.zip
+e7f81edbcfd343466d7d1f297e8be52a7856e8e4943ae09b9fb1fcad4bc9e98b  BT-Clock-Mobile-v2.3.1-Android8.apk
