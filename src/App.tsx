@@ -5,7 +5,6 @@ import { DownloadsView } from "./components/DownloadsView";
 import { WorldClockView } from "./components/WorldClockView";
 import { Footer } from "./components/Footer";
 import { PixelBackground } from "./components/PixelBackground";
-import { UpdateBanner } from "./components/UpdateBanner";
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"countdown" | "downloads" | "world-clock">(() => {
@@ -22,7 +21,7 @@ export const App: React.FC = () => {
   const [lang, setLang] = useState<"en" | "ar">("en");
   const [sfxOn, setSfxOn] = useState<boolean>(true);
   const [ambientOn, setAmbientOn] = useState<boolean>(false);
-  const [pixelOn, setPixelOn] = useState<boolean>(true);
+  const [pixelOn, setPixelOn] = useState<boolean>(false);
 
   // Sync browser history state
   const handleSelectTab = (tab: "countdown" | "downloads" | "world-clock") => {
@@ -58,10 +57,10 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-between relative selection:bg-[#ffd166] selection:text-[#090614]">
-      {/* Dynamic Pixel & Ambient Glowing Background */}
+      {/* Ambient Radial Mesh & Pixel Background */}
       <PixelBackground pixelOn={pixelOn} theme={theme} />
 
-      {/* Main Content Layer (Frosted Glass over Pixel Grid) */}
+      {/* Main Content Layer (Frosted Glass over Background) */}
       <div className="relative z-10 flex flex-col justify-between min-h-screen">
         <div>
           <Header
@@ -91,9 +90,6 @@ export const App: React.FC = () => {
         </div>
 
         <Footer lang={lang} onGoToDownloads={() => handleSelectTab("downloads")} />
-
-        {/* In-App Update Banner for Version v2.5.0 */}
-        <UpdateBanner lang={lang} />
       </div>
     </div>
   );
