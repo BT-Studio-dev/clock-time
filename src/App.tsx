@@ -4,6 +4,7 @@ import { CountdownView } from "./components/CountdownView";
 import { DownloadsView } from "./components/DownloadsView";
 import { WorldClockView } from "./components/WorldClockView";
 import { Footer } from "./components/Footer";
+import { PixelBackground } from "./components/PixelBackground";
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"countdown" | "downloads" | "world-clock">(() => {
@@ -20,6 +21,7 @@ export const App: React.FC = () => {
   const [lang, setLang] = useState<"en" | "ar">("en");
   const [sfxOn, setSfxOn] = useState<boolean>(true);
   const [ambientOn, setAmbientOn] = useState<boolean>(false);
+  const [pixelOn, setPixelOn] = useState<boolean>(true); // PIXEL ON by default
 
   // Sync browser history state
   const handleSelectTab = (tab: "countdown" | "downloads" | "world-clock") => {
@@ -48,40 +50,42 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-between relative selection:bg-[#ffd166] selection:text-[#090614]">
-      {/* Background radial gradients for cosmic feel */}
-      <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
-        <div className="absolute -top-[30%] left-[20%] w-[600px] h-[600px] rounded-full bg-[#7eb8e8]/5 blur-[120px]" />
-        <div className="absolute top-[40%] -right-[10%] w-[500px] h-[500px] rounded-full bg-[#ffd166]/5 blur-[140px]" />
-        <div className="absolute -bottom-[20%] left-[10%] w-[700px] h-[700px] rounded-full bg-[#3b1c6e]/10 blur-[160px]" />
+      {/* Dynamic Pixel & Ambient Glowing Background */}
+      <PixelBackground pixelOn={pixelOn} theme={theme} />
+
+      {/* Main Content Layer (Rendered in front of the pixel grid with frosted glass) */}
+      <div className="relative z-10 flex flex-col justify-between min-h-screen">
+        <div>
+          <Header
+            activeTab={activeTab}
+            setActiveTab={handleSelectTab}
+            theme={theme}
+            setTheme={setTheme}
+            lang={lang}
+            setLang={setLang}
+            sfxOn={sfxOn}
+            setSfxOn={setSfxOn}
+            ambientOn={ambientOn}
+            setAmbientOn={setAmbientOn}
+            pixelOn={pixelOn}
+            setPixelOn={setPixelOn}
+          />
+
+          <main className="w-full">
+            {activeTab === "countdown" && (
+              <CountdownView lang={lang} onGoToDownloads={() => handleSelectTab("downloads")} />
+            )}
+
+            {activeTab === "downloads" && <DownloadsView lang={lang} />}
+
+            {activeTab === "world-clock" && <WorldClockView lang={lang} />}
+          </main>
+        </div>
+
+        <Footer lang={lang} onGoToDownloads={() => handleSelectTab("downloads")} />
       </div>
-
-      <div>
-        <Header
-          activeTab={activeTab}
-          setActiveTab={handleSelectTab}
-          theme={theme}
-          setTheme={setTheme}
-          lang={lang}
-          setLang={setLang}
-          sfxOn={sfxOn}
-          setSfxOn={setSfxOn}
-          ambientOn={ambientOn}
-          setAmbientOn={setAmbientOn}
-        />
-
-        <main className="w-full">
-          {activeTab === "countdown" && (
-            <CountdownView lang={lang} onGoToDownloads={() => handleSelectTab("downloads")} />
-          )}
-
-          {activeTab === "downloads" && <DownloadsView lang={lang} />}
-
-          {activeTab === "world-clock" && <WorldClockView lang={lang} />}
-        </main>
-      </div>
-
-      <Footer lang={lang} onGoToDownloads={() => handleSelectTab("downloads")} />
     </div>
   );
 };
+
 export default App;

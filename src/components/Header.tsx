@@ -1,5 +1,5 @@
 import React from "react";
-import { Download, Globe, Moon, Sun, Volume2, VolumeX, Radio, Clock } from "lucide-react";
+import { Download, Globe, Moon, Sun, Volume2, VolumeX, Radio, Clock, Grid } from "lucide-react";
 import { playSfx, toggleSfx } from "../lib/sfx";
 import { toggleAmbient } from "../lib/ambient";
 
@@ -14,6 +14,8 @@ type HeaderProps = {
   setSfxOn: (on: boolean) => void;
   ambientOn: boolean;
   setAmbientOn: (on: boolean) => void;
+  pixelOn: boolean;
+  setPixelOn: (on: boolean) => void;
 };
 
 export const Header: React.FC<HeaderProps> = ({
@@ -27,6 +29,8 @@ export const Header: React.FC<HeaderProps> = ({
   setSfxOn,
   ambientOn,
   setAmbientOn,
+  pixelOn,
+  setPixelOn,
 }) => {
   const isAr = lang === "ar";
 
@@ -53,6 +57,11 @@ export const Header: React.FC<HeaderProps> = ({
     setAmbientOn(next);
   };
 
+  const handlePixelToggle = () => {
+    playSfx("pop");
+    setPixelOn(!pixelOn);
+  };
+
   const handleLangToggle = () => {
     playSfx("pop");
     const next = lang === "en" ? "ar" : "en";
@@ -68,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({
           onClick={() => handleTab("countdown")}
           className="flex items-center gap-3 cursor-pointer group"
         >
-          <div className="relative size-10 flex-none rounded-xl bg-gradient-to-br from-[#7eb8e8]/20 to-[#ffd166]/20 border border-white/15 p-1.5 flex items-center justify-center transition-transform group-hover:scale-105">
+          <div className="relative size-10 flex-none rounded-2xl bg-gradient-to-br from-[#7eb8e8]/25 to-[#ffd166]/25 border border-white/20 p-1.5 flex items-center justify-center transition-all group-hover:scale-105 group-hover:border-[#ffd166]/50 shadow-md">
             <svg viewBox="0 0 64 64" className="size-full">
               <defs>
                 <linearGradient id="hdr-ring" x1="0" y1="0" x2="1" y2="1">
@@ -87,7 +96,7 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="font-bold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-[#ffd166] bg-clip-text text-transparent">
                 BT Clock
               </span>
-              <span className="text-[10px] uppercase tracking-wider font-semibold px-1.5 py-0.5 rounded-full bg-[#7eb8e8]/20 text-[#7eb8e8] border border-[#7eb8e8]/30">
+              <span className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-[#7eb8e8]/20 text-[#7eb8e8] border border-[#7eb8e8]/30">
                 v2.4
               </span>
             </div>
@@ -101,9 +110,9 @@ export const Header: React.FC<HeaderProps> = ({
         <nav className="flex items-center gap-1 sm:gap-2">
           <button
             onClick={() => handleTab("countdown")}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-xl text-sm font-medium transition-all ${
               activeTab === "countdown"
-                ? "bg-white/15 text-white shadow-sm border border-white/20"
+                ? "bg-white/20 text-white shadow-sm border border-white/30"
                 : "text-slate-400 hover:text-white hover:bg-white/5"
             }`}
           >
@@ -112,9 +121,9 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={() => handleTab("downloads")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-medium transition-all ${
               activeTab === "downloads"
-                ? "bg-gradient-to-r from-[#ffd166]/20 to-[#7eb8e8]/20 text-[#ffd166] shadow-sm border border-[#ffd166]/40"
+                ? "bg-gradient-to-r from-[#ffd166]/25 to-[#7eb8e8]/25 text-[#ffd166] shadow-sm border border-[#ffd166]/50"
                 : "text-slate-300 hover:text-[#ffd166] hover:bg-white/5"
             }`}
           >
@@ -127,9 +136,9 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={() => handleTab("world-clock")}
-            className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+            className={`flex items-center gap-1 px-3 py-1.5 rounded-xl text-sm font-medium transition-all ${
               activeTab === "world-clock"
-                ? "bg-white/15 text-white shadow-sm border border-white/20"
+                ? "bg-white/20 text-white shadow-sm border border-white/30"
                 : "text-slate-400 hover:text-white hover:bg-white/5"
             }`}
           >
@@ -138,13 +147,42 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         </nav>
 
-        {/* Audio, Theme, Lang Actions */}
+        {/* Audio, Pixel Toggle, Theme, Lang Actions */}
         <div className="flex items-center gap-1.5 sm:gap-2">
+          {/* Pixel On/Off Toggle Button */}
+          <button
+            onClick={handlePixelToggle}
+            title={
+              pixelOn
+                ? isAr
+                  ? "إيقاف نمط البيكسل"
+                  : "Turn Pixel Mode OFF"
+                : isAr
+                ? "تفعيل نمط البيكسل"
+                : "Turn Pixel Mode ON"
+            }
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border transition-all cursor-pointer ${
+              pixelOn
+                ? "bg-emerald-400/20 border-emerald-400/50 text-emerald-300 shadow-[0_0_15px_rgba(52,211,153,0.3)] font-mono text-xs"
+                : "bg-white/5 border-white/10 text-slate-400 hover:text-white hover:bg-white/10 font-mono text-xs"
+            }`}
+          >
+            <Grid className="size-3.5" />
+            <span className="font-bold tracking-wider text-[11px]">
+              {pixelOn ? "PIXEL: ON" : "PIXEL: OFF"}
+            </span>
+            <span
+              className={`size-1.5 rounded-full ${
+                pixelOn ? "bg-emerald-400 animate-pulse" : "bg-slate-500"
+              }`}
+            />
+          </button>
+
           {/* Ambient Music */}
           <button
             onClick={handleAmbientToggle}
             title={ambientOn ? (isAr ? "إيقاف الموسيقى" : "Pause Ambient") : isAr ? "تشغيل الموسيقى" : "Play Ambient"}
-            className={`p-2 rounded-lg border transition-all ${
+            className={`p-2 rounded-xl border transition-all cursor-pointer ${
               ambientOn
                 ? "bg-[#7eb8e8]/20 border-[#7eb8e8]/50 text-[#7eb8e8]"
                 : "bg-white/5 border-white/10 text-slate-400 hover:text-white hover:bg-white/10"
@@ -166,7 +204,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={handleSfxToggle}
             title={sfxOn ? (isAr ? "كتم المؤثرات" : "Mute SFX") : isAr ? "تشغيل المؤثرات" : "Unmute SFX"}
-            className="p-2 rounded-lg bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 transition-all"
+            className="p-2 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
           >
             {sfxOn ? <Volume2 className="size-4 text-[#ffd166]" /> : <VolumeX className="size-4" />}
           </button>
@@ -175,7 +213,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={handleThemeToggle}
             title={isAr ? "تغيير المظهر" : "Toggle Theme"}
-            className="p-2 rounded-lg bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 transition-all"
+            className="p-2 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
           >
             {theme === "dark" ? <Sun className="size-4 text-[#ffd166]" /> : <Moon className="size-4 text-[#7eb8e8]" />}
           </button>
@@ -184,7 +222,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={handleLangToggle}
             title={isAr ? "Switch to English" : "التبديل إلى العربية"}
-            className="flex items-center gap-1 px-2 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-all"
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
           >
             <Globe className="size-3.5" />
             <span>{isAr ? "EN" : "عربي"}</span>
